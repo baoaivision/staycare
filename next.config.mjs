@@ -6,7 +6,8 @@ const nextConfig = {
     images: {
         domains: [
             "62.72.12.96",
-            "192.168.1.5"
+            "192.168.1.5",
+            "204c-14-224-138-139.ngrok-free.app"
         ]
     },
     webpack: (config) => {
