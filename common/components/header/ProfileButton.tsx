@@ -2,11 +2,6 @@
 import { Box, IconButton, Menu, MenuItem, Typography } from "@mui/material";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import React, { useEffect } from "react";
-import {
-  getServerAuthCookies,
-  removeAuthCookies,
-  removeServerAuthCookies,
-} from "@/utils/cookies";
 import { IProfile } from "@/interfaces/profile.interface";
 import { useRouter } from "next-nprogress-bar";
 const ProfileButton = () => {
@@ -46,15 +41,7 @@ const ProfileButton = () => {
         >
           My Profile
         </MenuItem>
-        <MenuItem
-          onClick={() => {
-            removeServerAuthCookies().then(() => {
-              router.replace("/login");
-            });
-          }}
-        >
-          Log Out
-        </MenuItem>
+        <MenuItem>Log Out</MenuItem>
       </Menu>
     </>
   );
