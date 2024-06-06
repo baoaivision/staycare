@@ -20,7 +20,6 @@ import ProfileButton from "./ProfileButton";
 import { useRouter } from "next-nprogress-bar";
 function AppHeader() {
   const [isAuth, setIsAuth] = useState(false);
-  isLogin().then((value) => setIsAuth(value));
   const router = useRouter();
   return (
     <AppBar
