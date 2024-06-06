@@ -2,8 +2,8 @@ import http from "@/utils/http"
 import { headers } from "next/headers"
 
 export const house = {
-    getHouse : async (page : number) => {
-        return await http.get(`/houses?page=${page ?? 1}&limit=4`,{
+    getHouse : async () => {
+        return await http.get(`/houses`,{
             headers: {
                 "Content-Type": "application/json", 
               },
