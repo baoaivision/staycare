@@ -7,7 +7,7 @@ import { PropsWithChildren } from "react";
 function MainLayout({ children }: PropsWithChildren) {
   return (
     <>
-      {/* <AppHeader /> */}
+      <AppHeader />
       <Box height={CommonConstants.dimensions.appBarHeight} />
       <Box
         display="flex"
