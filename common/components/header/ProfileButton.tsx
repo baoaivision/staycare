@@ -21,36 +21,6 @@ const ProfileButton = () => {
     setAnchorEl(null);
   };
 
-  const getProfile = async () => {
-    const cookies = await getServerAuthCookies();
-    console.log(cookies.accessToken);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.accessToken?.value}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      console.log(data);
-      setProfile(data.data);
-    } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
-    }
-  };
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
   return (
     <>
       <Box display={"flex"} alignItems={"center"} gap={"6px"}>
