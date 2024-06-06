@@ -1,25 +1,21 @@
 "use client";
-import { CommonConstants, CookiesConstant } from "@/utils/constants";
-import { isLogin } from "@/utils/helper/isLogin";
+import { userSelector } from "@/store/selector";
+import { CommonConstants } from "@/utils/constants";
 import { PersonAddAlt1Outlined } from "@mui/icons-material";
 import {
   AppBar,
   Box,
-  IconButton,
-  Menu,
-  MenuItem,
-  Typography,
+  Typography
 } from "@mui/material";
+import { useRouter } from "next-nprogress-bar";
+import Link from "next/link";
+import { useSelector } from "react-redux";
 import { NavRoutes } from "../../models/NavRoutes";
 import { NavLink } from "../nav-link";
-import LogoutButton from "./LogoutButton";
-import Link from "next/link";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import React, { useEffect, useState } from "react";
 import ProfileButton from "./ProfileButton";
-import { useRouter } from "next-nprogress-bar";
 function AppHeader() {
-  const [isAuth, setIsAuth] = useState(false);
+  const profile = useSelector(userSelector);
+  console.log(profile);
   const router = useRouter();
   return (
     <AppBar
@@ -55,7 +51,7 @@ function AppHeader() {
         {NavRoutes.map((route) => (
           <NavLink key={route.to} props={route} href={route.to} />
         ))}
-        {!isAuth ? (
+        {!profile ? (
           <Link
             href={"/login"}
             style={{ display: "flex", alignItems: "center" }}

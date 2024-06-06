@@ -3,6 +3,7 @@ import { userApi } from "@/clientApi/user";
 import { IProfile } from "@/interfaces/profile.interface";
 import PasswordForm from "@/modules/profile/PasswordForm";
 import ProfileForm from "@/modules/profile/ProfileForm";
+import { userSelector } from "@/store/selector";
 import { CommonConstants } from "@/utils/constants";
 import { getServerAuthCookies } from "@/utils/cookies";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -10,39 +11,13 @@ import { Box, Button, Icon, Typography } from "@mui/material";
 import { cookies } from "next/headers";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function ProfilePage() {
-  const [profile, setProfile] = React.useState<IProfile>();
   const [activeButton, setActiveButton] = useState(0);
   const router = useRouter();
-  const getProfile = async () => {
-    const cookies = await getServerAuthCookies();
-    console.log(cookies.accessToken);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.accessToken?.value}`,
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-      setProfile(data.data);
-    } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
-    }
-  };
+  const profile = useSelector(userSelector);
 
-  useEffect(() => {
-    getProfile();
-  }, []);
   return (
     <Box
       display="flex"

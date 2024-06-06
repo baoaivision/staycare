@@ -8,7 +8,7 @@ import { cookies } from "next/headers";
 import { ToastContainer } from "react-toastify";
 import ThemeRegistry from "../utils/providers/theme-register";
 import NprogressProvider from "@/utils/providers/nprogress-provider";
-
+import ReduxProvider from "@/utils/providers/redux-provider";
 const roboto = Roboto({
   weight: ["400", "500", "700"],
   subsets: ["latin", "vietnamese"],
@@ -30,19 +30,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx(roboto.className, "h-screen")}>
-        <ThemeRegistry options={{ key: "mui" }}>
-          <NprogressProvider>
-            <AuthProvider
-              initialAccessToken={{
-                accessToken: accessToken?.value,
-                refreshToken: refreshToken?.value,
-              }}
-            >
-              {children}
-              <ToastContainer />
-            </AuthProvider>
-          </NprogressProvider>
-        </ThemeRegistry>
+        <ReduxProvider>
+          <ThemeRegistry options={{ key: "mui" }}>
+            <NprogressProvider>
+              <AuthProvider
+                initialAccessToken={{
+                  accessToken: accessToken?.value,
+                  refreshToken: refreshToken?.value,
+                }}
+              >
+                {children}
+                <ToastContainer />
+              </AuthProvider>
+            </NprogressProvider>
+          </ThemeRegistry>
+        </ReduxProvider>
       </body>
     </html>
   );

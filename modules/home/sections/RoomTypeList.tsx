@@ -22,7 +22,33 @@ function RoomTypeList() {
   const [page, setPage] = useState(1);
   const contentWidth = CommonConstants.dimensions.contentWidth;
   const boxRef = useRef(null);
+  const getHouse = async () => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/houses`,
+        { headers: { "ngrok-skip-browser-warning": "true" } }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data);
+      setDataHouse(data.data);
+      setTotalPage(data.metadata.total_page);
+    } catch (error) {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
+    getHouse();
+  }, [page]);
   console.log("page", page);
 
   return (

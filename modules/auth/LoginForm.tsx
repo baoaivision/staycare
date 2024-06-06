@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { authApi } from "@/clientApi/auth";
 import { handleHttpError } from "@/utils/helper";
 import { useRouter } from "next/navigation";
-
+import Cookies from "js-cookie";
 function LoginForm() {
   const router = useRouter();
   const {
@@ -29,6 +29,7 @@ function LoginForm() {
     authApi
       .login(data)
       .then((res) => {
+        Cookies.set("access_token", res.payload.access_token);
         toast.success("Login success");
         if (res.payload.role === "admin") {
           router.push("/blog-manage");

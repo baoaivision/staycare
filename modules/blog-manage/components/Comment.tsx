@@ -1,11 +1,12 @@
 "use client";
-import { Box, Button, Typography, Input, IconButton } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { formatDistanceToNow } from "date-fns";
 import defaultAvt from "@/public/images/defaultAvt.png";
-import Image from "next/image";
+import { userSelector } from "@/store/selector";
 import { ThumbUpAltOutlined } from "@mui/icons-material";
-import { isLogin } from "@/utils/helper/isLogin";
+import { Box, Button, IconButton, Input, Typography } from "@mui/material";
+import { formatDistanceToNow } from "date-fns";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 interface Comment {
   id: number;
   like: number;
@@ -29,9 +30,8 @@ const Comment: React.FC<CommentProps> = ({ comment, onLike, onReply }) => {
   const [replyText, setReplyText] = useState("");
   // State for managing the visibility of the reply input field
   const [showReplyInput, setShowReplyInput] = useState(false);
-  const [isAuth, setIsAuth] = useState(false);
 
-  isLogin().then((value) => setIsAuth(value));
+  const profile = useSelector(userSelector);
   // Handle the reply submission
   const handleReply = () => {
     if (replyText.trim()) {
@@ -97,7 +97,7 @@ const Comment: React.FC<CommentProps> = ({ comment, onLike, onReply }) => {
             alignItems: "center",
           }}
         >
-          {isAuth && (
+          {profile && (
             <Button
               className="text-xl text-[#848484] font-medium me-8"
               onClick={() => setShowReplyInput(!showReplyInput)}

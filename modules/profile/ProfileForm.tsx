@@ -13,35 +13,11 @@ import Link from "next/link";
 import { getServerAuthCookies } from "@/utils/cookies";
 import { toast } from "react-toastify";
 import { userApi } from "@/clientApi/user";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/slice/accountSlice";
 
 const ProfileForm = ({ data }: { data: IProfile }) => {
-  const updateProfile = async (data: ProfileFormType) => {
-    const cookies = await getServerAuthCookies();
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/profile`,
-
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${cookies.accessToken?.value}`,
-          },
-          body: JSON.stringify(data),
-        }
-      )
-        .then(() => {
-          toast.success("Update profile success!");
-        })
-        .catch(() => {
-          toast.error("Update profile error!");
-        });
-    } catch (error) {
-      console.error(
-        "There has been a problem with your fetch operation:",
-        error
-      );
-    }
-  };
+  const dispatch = useDispatch();
   const {
     control,
     setError,
@@ -66,7 +42,8 @@ const ProfileForm = ({ data }: { data: IProfile }) => {
           ic_code: getValues().ic_code,
         },
       })
-      .then(() => {
+      .then((value: any) => {
+        dispatch(setUser(value.payload as IProfile));
         toast.success("Update profile success!");
       })
       .catch(() => {

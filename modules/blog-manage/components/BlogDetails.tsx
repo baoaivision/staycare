@@ -2,7 +2,6 @@ import { formatDate } from "@/utils/helper";
 import { useFetch } from "@/utils/useFetch";
 import { Box, Typography } from "@mui/material";
 import CommentSection from "../sections/CommentSection";
-import { isLogin } from "@/utils/helper/isLogin";
 interface responseDataDetails {
   id: number;
   title: string;

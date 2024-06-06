@@ -9,7 +9,28 @@ import { useEffect, useState } from "react";
 
 const Blog = () => {
   const [dataPost, setDataPost] = useState<Post[]>([]);
+  useEffect(() => {
+    getPost();
+  }, []);
+  const getPost = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/posts?page=1&limit=2` || "",
+        { headers: { "ngrok-skip-browser-warning": "true" } }
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
 
+      setDataPost(data.data);
+    } catch (error) {
+      console.error(
+        "There has been a problem with your fetch operation:",
+        error
+      );
+    }
+  };
   return (
     <Box
       display={"flex"}
